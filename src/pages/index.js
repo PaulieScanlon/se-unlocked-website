@@ -109,11 +109,7 @@ export const query = graphql`
           permalink
           thumbnail {
             childImageSharp {
-              gatsbyImageData(
-                width: 200
-                placeholder: BLURRED
-                formats: [AUTO, WEBP, AVIF]
-              )
+              gatsbyImageData(width: 200)
             }
           }
           excerpt

@@ -14,6 +14,7 @@ module.exports = {
     keywords: `tech podcast, software quality, code reviews, technology podcast, software engineering podcast, programming podcast`,
   },
   plugins: [
+    "gatsby-plugin-netlify",
     // {
     //   resolve: "gatsby-plugin-sass",
     //   options: {
@@ -32,7 +33,6 @@ module.exports = {
         timeout: 3500, // number; the amount of time, in milliseconds, that you want to allow mailchimp to respond to your request before timing out. defaults to 3500
       },
     },
-    "gatsby-plugin-image",
     {
       resolve: "gatsby-plugin-google-analytics",
       options: {
@@ -43,16 +43,16 @@ module.exports = {
       resolve: `gatsby-plugin-feed`,
       options: {
         query: `
-          {
-            site {
-              siteMetadata {
-                title
-                description
-                siteUrl
-                site_url: siteUrl
-              }
+        {
+          site {
+            siteMetadata {
+              title
+              description
+              siteUrl
+              site_url: siteUrl
             }
           }
+        }
         `,
         feeds: [
           {
@@ -71,9 +71,9 @@ module.exports = {
               });
             },
             query: `
-              {
-                allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___date] },
+            {
+              allMarkdownRemark(
+                sort: { order: DESC, fields: [frontmatter___date] },
                 ) {
                   nodes {
                     excerpt
@@ -88,58 +88,68 @@ module.exports = {
                   }
                 }
               }
-            `,
-            output: "/rss.xml",
-            title: "SE Unlocked RSS Feed",
-          },
-        ],
-      },
-    },
-    "gatsby-plugin-react-helmet",
-    {
-      resolve: `gatsby-plugin-react-helmet-canonical-urls`,
-      options: {
-        siteUrl: `https://www.software-engineering-unlocked.com`,
-      },
-    },
-    "gatsby-plugin-sitemap",
-    {
-      resolve: "gatsby-plugin-manifest",
-      options: {
-        icon: "src/images/Software_Engineering_Unlocked_FavIcon.png",
-      },
-    },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
-          {
-            resolve: "gatsby-remark-audio",
-            options: {
-              preload: "auto",
-              loop: false,
-              controls: true,
-              muted: false,
-              autoplay: false,
+              `,
+              output: "/rss.xml",
+              title: "SE Unlocked RSS Feed",
             },
-          },
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 800,
-            },
-          },
-        ],
+          ],
+        },
       },
-    },
-    "gatsby-plugin-mdx",
-    "gatsby-plugin-sharp",
-    "gatsby-transformer-sharp",
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        name: "images",
-        path: "./src/images/",
+      "gatsby-plugin-react-helmet",
+      {
+        resolve: `gatsby-plugin-react-helmet-canonical-urls`,
+        options: {
+          siteUrl: `https://www.software-engineering-unlocked.com`,
+        },
+      },
+      "gatsby-plugin-sitemap",
+      {
+        resolve: "gatsby-plugin-manifest",
+        options: {
+          icon: "src/images/Software_Engineering_Unlocked_FavIcon.png",
+        },
+      },
+      {
+        resolve: `gatsby-transformer-remark`,
+        options: {
+          plugins: [
+            {
+              resolve: "gatsby-remark-audio",
+              options: {
+                preload: "auto",
+                loop: false,
+                controls: true,
+                muted: false,
+                autoplay: false,
+              },
+            },
+            {
+              resolve: `gatsby-remark-images`,
+              options: {
+                maxWidth: 800,
+              },
+            },
+          ],
+        },
+      },
+      "gatsby-plugin-mdx",
+      "gatsby-plugin-image",
+      "gatsby-transformer-sharp",
+      {
+        resolve: 'gatsby-plugin-sharp',
+        options: {
+          defaults: {
+            quality: 90,
+            formats: ['auto', 'webp', 'avif'],
+            placeholder: 'blurred',
+          },
+        },
+      },
+      {
+        resolve: "gatsby-source-filesystem",
+        options: {
+          name: "images",
+          path: "./src/images/",
       },
       __key: "images",
     },
